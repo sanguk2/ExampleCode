@@ -1,0 +1,45 @@
+/*
+ * This software is the confidential and proprietary information of UZEN
+ * Co.,Ltd., Inc. You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ * license agreement you entered into with UZEN.
+ */
+/*
+
+*/
+/* queryDSL *//*
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.querydsl.apt.jpa.JPAAnnotationProcessor"
+    ]
+	options.encoding = "UTF-8"
+	options.warnings = false
+	options.incremental = false
+
+    destinationDir = file(queryDSLOutput)
+}
+
+compileJava {
+	if (!skipGenerateQueryDSL()) {
+	    dependsOn generateQueryDSL
+	}
+}
+
+clean {
+	if (!skipGenerateQueryDSL()) {
+		delete generateQueryDSL.destinationDir
+	}
+}
+
+generateQueryDSL.onlyIf {
+	!skipGenerateQueryDSL()
+}
+
+def skipGenerateQueryDSL() {
+	def useGenerateQueryDSL = System.properties['skipGenerateQueryDSL']
+	'true'.equals(useGenerateQueryDSL)
+}*/

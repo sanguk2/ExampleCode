@@ -1,0 +1,5 @@
+// 다중 프로젝트에 대한 모든 정보는 settings.gradle 에 기록됨.
+rootProject.name = 'ExampleCode'
+
+include 'list'
+
